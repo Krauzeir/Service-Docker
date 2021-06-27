@@ -1,0 +1,33 @@
+version : "3"
+
+services:
+  jogatina:
+    image: servnoticias
+    build: .
+    volumes:
+      - "./servicos/jogatina:/servicos"
+    command: python3 servico.py
+    expose:
+      - "5000"
+    networks:
+      mynet:
+        ipv4_address: "172.28.1.1"
+
+  sistemas:
+    image: servnoticias
+    build: .
+    volumes:
+      - "./servicos/sistemas:/servicos"
+    command: python3 servico.py
+    expose:
+      - "5000"
+    networks:
+      mynet:
+        ipv4_address: "172.28.1.2"
+
+networks:
+  mynet:
+    ipam:
+      driver: default
+      config:
+        - subnet: "172.28.1.0/16"
